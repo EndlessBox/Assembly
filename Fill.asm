@@ -18,75 +18,76 @@
 
 (INF_LOOP)
 
-    // @24576
-    // D=M
-
-    // @WHITE
-    // D;JEQ
-
-    @i
+    @i          // Initialize counter.
     M=0
 
-    @8192
+    @KBD        // Get Keyboard Value.
+    D=M
+
+    @WHITE      // Check if Key[value] = 0 == White color.
+    D;JEQ
+
+    @8192       // Set Screen Pixels Limits
     D=A
 
-    @R1
+
+    @R1         // Store it in R1
     M=D
 
-    @SCREEN
+    @SCREEN     // Get SCREEN Address
     D=A
 
-    @address
+    @address    // Store it at address
     M=D
 
 (BLACK)
 
+    @i          // Get counte value
+    D=M
+
+
+    @R1         // Check if it reached limit of Screen
+    D=M-D
+
+    @END
+    D;JEQ
+
+    @address    // Get Screen address
+    D=M
+
+    @i          // Add counter to Screen address
+    A=D+M
+    M=-1        // Pint Pixel Black
+
+    @i          // Increment counter
+    M=M+1
+
+    @BLACK      // Reapeat
+    0;JMP
+
+(WHITE)
     @i
     D=M
 
 
     @R1
-    D=D-M
+    D=M-D
 
     @END
     D;JEQ
 
-    @i
+    @address
     D=M
 
-    @address
-    A=M+D
-    M=0
+    @i
+    A=D+M
+    M=0         // Pint Pixel White
 
     @i
     M=M+1
 
-    @BLACK
+    @WHITE
     0;JMP
-
-// (WHITE)
-//     @i
-//     D=M
-
-
-//     @R1
-//     D=D-M
-
-//     @END
-//     D;JEQ
-
-//     @i
-//     D=M
-
-//     @address
-//     A=A+D
-//     M=0
-
-//     @i
-//     M=M+1
-
-//     @WHITE
-//     0;JMP
 
 
 
